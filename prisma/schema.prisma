@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cardattacks {
+  id                          Int       @id @default(autoincrement())
+  attacks_name                String?
+  attacks_cost                String?
+  attacks_convertedenergycost Int?
+  attacks_damage              String?
+  attacks_text                String?
+  abilities_name              String?
+  abilities_text              String?
+  abilities_type              String?
+  pokemoncard_id              String?
+  pokemoncard                 pokemoncard? @relation(fields: [pokemoncard_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cardset {
+  id                   String        @id
+  name                 String?
+  series               String?
+  printedtotal         Int?
+  total                Int?
+  releasedate          DateTime?     @db.Timestamp(6)
+  updatedat            DateTime?     @db.Timestamp(6)
+  images_symbol        String?
+  images_logo          String?
+  pokemoncard          pokemoncard[]
+}
+
+model prices {
+  id                   String       @id
+  pokemoncard_id       String?
+  pokemoncard          pokemoncard? @relation(fields: [pokemoncard_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rarity               String?
+  price                String?
+  updatedAt            DateTime     @updatedAt
+}
+
+model pokemoncard {
+  id                     String        @id
+  name                   String?
+  supertype              String?
+  subtypes               String?
+  rules                  String?
+  set_id                 String?
+  number                 Int?
+  images_small           String?
+  level                  Int?
+  hp                     Int?
+  types                  String?
+  nationalpokedexnumbers Int?
+  cardattacks            cardattacks[]
+  cardprices             prices[]
+  cardset                cardset?      @relation(fields: [set_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cardbooks              cardbook[]
+  cardquantities         cardquantity[]
+}
+
+model user {
+  id    String    @id @default(uuid())
+  name    String
+  email   String    @unique
+  ispremium  Boolean    @default(false)
+  cardbook   cardbook[]
+}
+
+model cardquantity {
+  id    String    @id @default(uuid())
+  quantity  Int
+  cardbook  cardbook @relation(fields: [cardbookId], references: [id], onDelete: Cascade)
+  cardbookId  String
+  pokemoncard  pokemoncard @relation(fields: [pokemoncardId], references: [id], onDelete: Cascade)
+  pokemoncardId  String
+}
+
+model cardbook {
+  id    String    @id @default(uuid())
+  name  String
+  userId  String
+  user    user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pokemoncard  pokemoncard[]
+  cardQuantity cardquantity[]
+}
+

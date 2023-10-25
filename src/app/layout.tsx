@@ -2,6 +2,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+import Navbar from '@/components/Navbar'
+import NextAuthSessionProvider from './providers/sessionProvider'
+import { Toaster } from 'react-hot-toast'
+import { SubscriptionProvider } from './providers/subscriptionProvider'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -16,7 +21,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-slate-100 max-w-screen-xl mx-auto`}>
+        <NextAuthSessionProvider>
+          <SubscriptionProvider>
+            <Toaster position='bottom-right' />
+            <Navbar />
+            {children}
+          </SubscriptionProvider>
+        </NextAuthSessionProvider>
+        <div className='h-64 w-64 bg-purple-200 rounded-full absolute top-32 left-4 -z-40 blur-3xl sm:top-64 sm:left-16' />
+        <div className='h-64 w-64 bg-blue-300 rounded-full absolute top-72 right-8 -z-40 blur-xl ' />
+      </body>
     </html>
   )
 }
