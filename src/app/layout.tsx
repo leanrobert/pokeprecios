@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Navbar from '@/components/Navbar'
 import NextAuthSessionProvider from './providers/sessionProvider'
 import { Toaster } from 'react-hot-toast'
 import { SubscriptionProvider } from './providers/subscriptionProvider'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +29,7 @@ export default function RootLayout({
             <Toaster position='bottom-right' />
             <Navbar />
             {children}
+            <Footer />
           </SubscriptionProvider>
         </NextAuthSessionProvider>
         <div className='h-64 w-64 bg-purple-200 rounded-full absolute top-32 left-4 -z-40 blur-3xl sm:top-64 sm:left-16' />

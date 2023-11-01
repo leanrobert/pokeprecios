@@ -27,12 +27,12 @@ export default async function Search({ searchParams } : { searchParams?: { searc
 	const { data: cards, amount } = await fetchCards(search, page)
 
 	return (
-		<div className='flex flex-col items-center h-screen'>
+		<div className='flex flex-col items-center mb-10'>
 			<SearchInput />
 
 			<CardsGrid cards={cards} />
 
-			<PaginationControl page={page} search={search ?? ''} amount={amount} />
+			<PaginationControl  page={page} search={search ?? ''} amount={amount} />
 		</div>
 	)
 }

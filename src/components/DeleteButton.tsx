@@ -1,9 +1,11 @@
 "use client"
 
+import { useMyCardBook } from '@/app/providers/userCardBookProvider'
 import React from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
 const DeleteButton = ({ userId, bookId }: { userId:string, bookId: string }) => {
+  const { setMyBooks } = useMyCardBook()
 
   const deleteCardbook = async () => {
     await fetch(`http://oltmanager.westnet.com.ar:3002/api/user/${userId}/cardbook/${bookId}`, {
@@ -14,7 +16,7 @@ const DeleteButton = ({ userId, bookId }: { userId:string, bookId: string }) => 
       body: JSON.stringify({ id: '1' })
     })
 
-    window.location.reload()
+    setMyBooks((prev) => prev!.filter((book) => book.id !== bookId))
   }
 
   return (

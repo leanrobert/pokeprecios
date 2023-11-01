@@ -9,11 +9,11 @@ const CardBookHeader = ({ cardbook }: { cardbook: CardBook }) => {
 
   useEffect(() => {
     setMyBook(cardbook.cardQuantity)
-  }, [cardbook, setMyBook])
+  }, [cardbook.cardQuantity, setMyBook])
 
   return (
     <div className="mt-[72px] mb-4">
-      <h2 className="text-2xl">Carpeta <span className='font-semibold'>{cardbook.name}</span></h2>
+      <h2 className="text-2xl">Carpeta <span className='font-semibold capitalize'>{cardbook.name}</span></h2>
     </div>
   )
 }

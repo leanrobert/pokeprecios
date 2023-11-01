@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 
 export const getCardBook = async (id: string, bookId: string) => {
   try {
-    const res = await fetch(`http://localhost:3002/api/user/${id}/cardbook/${bookId}`)
+    const res = await fetch(`http://localhost:3002/api/user/${id}/cardbook/${bookId}`, { cache: 'no-cache' })
 
     if (res.ok) {
       const data = await res.json()
@@ -32,10 +32,10 @@ export default async function BookDetial({ params }: { params: { bookId: string 
 
   return (
     <CardBookProvider>
-      <div className='flex flex-col h-screen max-w-screen-xl p-4'>
+      <div className='flex flex-col h-screen max-w-screen-xl p-4 mb-10'>
         <CardBookHeader cardbook={cardbook} />
-        <div className='flex-1 flex gap-4 overflow-hidden'>
-          <MyCardBook userId={cardbook.userId} bookId={cardbook.id} />
+        <div className='flex-1 flex flex-col md:flex-row gap-4 md:overflow-hidden'>
+          <MyCardBook owner={session.user.id} userId={cardbook.userId} bookId={cardbook.id} />
         </div>
       </div>
     </CardBookProvider>

@@ -1,17 +1,18 @@
 "use client"
 
-import { CardQuantity, PokeCardQuantity } from '@/utils/types'
+import { PokeCardQuantity } from '@/utils/types'
 import Image from 'next/image'
 import React from 'react'
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 
 interface CardAditionProps {
+  owner: boolean,
   card: PokeCardQuantity,
   sum: (card: PokeCardQuantity) => void,
   sub: (card: PokeCardQuantity) => void
 }
 
-const CardAdition: React.FC<CardAditionProps> = ({ card, sum, sub }) => {
+const CardAdition: React.FC<CardAditionProps> = ({ owner, card, sum, sub }) => {
   return (
     <div key={card.id} className='flex items-center justify-between border border-slate-200 shadow-md rounded-lg p-2'>
       <div className='flex items-center gap-4'>
@@ -23,14 +24,23 @@ const CardAdition: React.FC<CardAditionProps> = ({ card, sum, sub }) => {
           <span>{card.pokemoncard.cardset.series}: {card.pokemoncard.cardset.name}</span>
         </p>
       </div>
-      <div className='flex items-center gap-4'>
-        <button onClick={() => sub(card)} className=''>
-          <AiOutlineMinusCircle className="h-7 w-7" />
-        </button>
-        <p className='text-lg font-bold text-purple-800'>{card.quantity}</p>
-        <button onClick={() => sum(card)} className=''>
-          <AiOutlinePlusCircle  className="h-7 w-7"/>
-        </button>
+      <div className='flex flex-col items-center gap-2'>
+        <div className='flex items-center gap-4'>
+          {owner && (
+            <button onClick={() => sub(card)} className=''>
+              <AiOutlineMinusCircle className="h-7 w-7" />
+            </button>
+          )}
+          <p className='text-lg font-bold text-purple-800'>{card.quantity}</p>
+          {owner && (
+            <button onClick={() => sum(card)} className=''>
+              <AiOutlinePlusCircle  className="h-7 w-7"/>
+            </button>
+          )}
+        </div>
+        <div className='border border-purple-300 text-purple-800 bg-purple-100 rounded-xl px-2'>
+          ${(card.pokemoncard.cardprices[0].price * card.quantity).toFixed(2)}
+        </div>
       </div>
     </div>
   )

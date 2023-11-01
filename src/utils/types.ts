@@ -2,7 +2,7 @@ export interface CardPrice {
   id: string,
   pokemoncard_id: string,
   rarity: string,
-  price: string
+  price: number
 }
 
 export interface CardSet {

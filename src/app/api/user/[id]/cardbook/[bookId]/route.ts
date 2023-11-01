@@ -14,7 +14,8 @@ export async function GET(req: Request, { params }: { params: { bookId: string }
         include: {
           pokemoncard: {
             include: {
-              cardset: true
+              cardset: true,
+              cardprices: true
             }
           }
         }
@@ -57,7 +58,8 @@ export async function PUT(req: Request, { params }: { params: { bookId: string }
           include: {
             pokemoncard: {
               include: {
-                cardset: true
+                cardset: true,
+                cardprices: true
               }
             }
           }

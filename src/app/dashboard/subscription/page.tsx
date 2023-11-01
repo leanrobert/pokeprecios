@@ -55,6 +55,8 @@ const SubscriptionPage = () => {
   const router = useRouter()
   const { isPremium, setIsPremium } = useSubscription()
 
+  console.log(isPremium)
+
   if (status === 'loading') {
     return (
       <div className='flex flex-col h-screen max-w-screen-xl p-4'>
@@ -115,101 +117,98 @@ const SubscriptionPage = () => {
     }
   }
 
-  if (isPremium) {
-    return (
-      <div className='flex flex-col h-screen max-w-screen-xl p-4'>
-        <div className='mt-[72px]'>
-          <h2 className="text-2xl text-center mb-8 font-bold">Eliminar subscripcion</h2>
-          <SubscriptionPlan
-            title='Plan Free'
-            description='Perderas los beneficios de Premium el proximo mes'
-            price={0}
-            features={[
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Actualizaciones todos los dias'
-              },
-              {
-                icon: <BsX className="flex-shrink-0 w-5 h-5 text-red-500" />,
-                text: 'Links para compartir'
-              },
-              {
-                icon: <PiWarningCircle className="flex-shrink-0 w-5 h-5 text-yellow-500" />,
-                text: 'Carpetas: hasta 3'
-              },
-              {
-                icon: <PiWarningCircle className="flex-shrink-0 w-5 h-5 text-yellow-500" />,
-                text: 'Cartas diferentes: 10 por carpeta'
-              }
-            ]}
-            buttonText='Elegir'
-            onClick={cancelPremium}
-          />
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div className='flex flex-col h-screen max-w-screen-xl p-4'>
+    <div className='flex flex-col max-w-screen-xl p-4 mb-10'>
       <div className='mt-[72px]'>
-        <h2 className="text-2xl text-center mb-8 font-bold">Elegi el plan ideal para vos</h2>
+        {isPremium ? (
+          <>
+            <h2 className="text-2xl text-center mb-8 font-bold">Eliminar subscripcion</h2>
+            <SubscriptionPlan
+              title='Plan Free'
+              description='Perderas los beneficios de Premium el proximo mes'
+              price={0}
+              features={[
+                {
+                  icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                  text: 'Actualizaciones todos los dias'
+                },
+                {
+                  icon: <BsX className="flex-shrink-0 w-5 h-5 text-red-500" />,
+                  text: 'Links para compartir'
+                },
+                {
+                  icon: <PiWarningCircle className="flex-shrink-0 w-5 h-5 text-yellow-500" />,
+                  text: 'Carpetas: hasta 3'
+                },
+                {
+                  icon: <PiWarningCircle className="flex-shrink-0 w-5 h-5 text-yellow-500" />,
+                  text: 'Cartas diferentes: 10 por carpeta'
+                }
+              ]}
+              buttonText='Elegir'
+              onClick={cancelPremium}
+            />
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl text-center mb-8 font-bold">Elegi el plan ideal para vos</h2>
+            <div className="max-w-3xl mx-auto space-y-8 lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-10 lg:space-y-0">
+              {/* Plan Free */}
+              <SubscriptionPlan
+                title='Continua con Free'
+                description='Mejor opcion para probar la app.'
+                price={0}
+                features={[
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Actualizaciones todos los dias'
+                  },
+                  {
+                    icon: <BsX className="flex-shrink-0 w-5 h-5 text-red-500" />,
+                    text: 'Links para compartir'
+                  },
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Carpetas: hasta 3'
+                  },
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Cartas diferentes: 10 por carpeta'
+                  }
+                ]}
+                buttonText='Elegir'
+                onClick={() => router.push('/dashboard')}
+              />
 
-        <div className="max-w-3xl mx-auto space-y-8 lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-10 lg:space-y-0">
-          {/* Plan Free */}
-          <SubscriptionPlan
-            title='Free'
-            description='Mejor opcion para probar la app.'
-            price={0}
-            features={[
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Actualizaciones todos los dias'
-              },
-              {
-                icon: <BsX className="flex-shrink-0 w-5 h-5 text-red-500" />,
-                text: 'Links para compartir'
-              },
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Carpetas: hasta 3'
-              },
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Cartas diferentes: 10 por carpeta'
-              }
-            ]}
-            buttonText='Elegir'
-            onClick={cancelPremium}
-          />
-
-          {/* Plan Premium */}
-          <SubscriptionPlan
-            title='Premium'
-            description='Mejor opcion para tu negocio.'
-            price={1000}
-            features={[
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Actualizaciones todos los dias'
-              },
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Links para compartir'
-              },
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Carpetas: hasta 50'
-              },
-              {
-                icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
-                text: 'Cartas diferentes: 100 por carpeta'
-              }
-            ]}
-            buttonText='Elegir'
-            onClick={getPremium}
-          />
-        </div>
+              {/* Plan Premium */}
+              <SubscriptionPlan
+                title='Premium'
+                description='Mejor opcion para tu negocio.'
+                price={1000}
+                features={[
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Actualizaciones todos los dias'
+                  },
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Links para compartir'
+                  },
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Carpetas: hasta 50'
+                  },
+                  {
+                    icon: <BsCheck className="flex-shrink-0 w-5 h-5 text-green-500" />,
+                    text: 'Cartas diferentes: 100 por carpeta'
+                  }
+                ]}
+                buttonText='Elegir'
+                onClick={getPremium}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

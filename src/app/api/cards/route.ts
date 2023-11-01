@@ -5,8 +5,9 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
 
   const search = searchParams.get('search') ?? ''
+  const take = 10
   const page = !Number(searchParams.get('page')) ? 1 : Number(searchParams.get('page'))
-  const skip = (page - 1) * 10
+  const skip = (page - 1) * take
 
   const data = await prisma.pokemoncard.findMany({
     where: {
@@ -19,13 +20,18 @@ export async function GET(req: Request) {
       cardprices: true,
       cardset: true
     },
-    take: 10,
+    take: take,
     skip: skip,
-    orderBy: {
-      cardset: {
-        releasedate: 'desc'
+    orderBy: [
+      {
+        cardset: {
+          releasedate: 'desc'
+        }
+      },
+      {
+        number: 'asc'
       }
-    }
+    ]
   })
 
   const amount = await prisma.pokemoncard.count({

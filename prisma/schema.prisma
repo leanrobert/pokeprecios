@@ -36,11 +36,11 @@ model cardset {
 }
 
 model prices {
-  id                   String       @id
+  id                   String       @id @default(uuid())
   pokemoncard_id       String?
   pokemoncard          pokemoncard? @relation(fields: [pokemoncard_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   rarity               String?
-  price                String?
+  price                Float?       @default(0)
   updatedAt            DateTime     @updatedAt
 }
 

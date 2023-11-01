@@ -13,10 +13,12 @@ const PokemonCardBox = ({ card }: { card: PokemonCard }) => {
         </div>
         {card.cardprices?.map((price: CardPrice) => (
           <div className="w-full flex flex-col items-center border-b border-purple-200" key={price.id}>
-            <p className="font-semibold text-sm text-center">{price.rarity}</p>
+            <p className="font-semibold text-sm text-center">
+              {price.rarity.includes('reverse') ? 'Reverse' : price.rarity.includes('holo') ? 'Holo' : 'Normal'}
+            </p>
             <div className="h-10">
               {price.price
-                ? <p className="text-purple-600 font-bold text-xl">${price.price}</p>
+                ? <p className="text-purple-600 font-bold text-xl">${price.price.toFixed(2)}</p>
                 : <p>No price available</p>
               }
             </div>
